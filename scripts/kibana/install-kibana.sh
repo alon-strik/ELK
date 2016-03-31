@@ -1,8 +1,6 @@
 #!/bin/bash
 
 set -e
-
-
 function install_kibana()
 {
     #elasticsearch_ip=$1

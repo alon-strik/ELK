@@ -1,15 +1,9 @@
 #!/bin/bash
-
 set -e
-
-
-
 function install_elasticsearch()
 {
     cluster_name=$1
-
     ctx logger info  "installing elasticsearch"
-
     sudo wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.5.2.deb -O /opt/elasticsearch.deb
     sudo dpkg -i /opt/elasticsearch.deb
     sudo update-rc.d elasticsearch defaults 95 10
@@ -17,9 +11,6 @@ function install_elasticsearch()
     ctx logger info  "Setting cluster name"
     echo "cluster.name: ${cluster_name}" | sudo tee --append /etc/elasticsearch/elasticsearch.yml
     sudo /etc/init.d/elasticsearch start
-    
-
-
     # install plugins
     sudo /usr/share/elasticsearch/bin/plugin --install mobz/elasticsearch-head
     sudo /usr/share/elasticsearch/bin/plugin --install lmenezes/elasticsearch-kopf/1.2
@@ -38,7 +29,6 @@ function main()
         exit 1
     fi
     
-
     ctx logger info  "bootstrapping..."
 
     ctx logger info  "updating db cache"
@@ -63,26 +53,3 @@ function main()
 }
 
 main
-
-
-
-#PORT=$(ctx node properties port)
-
-#Set the IP
-#ctx source instance runtime_properties mongo_ip_address $(ctx target instance host_ip)
-
-#Get the IP
-#MONGO_HOST=$(ctx instance runtime_properties mongo_ip_address)
-
-#MONGO_ROOT_PATH=$(ctx instance runtime_properties mongo_root_path)
-#MONGO_BINARIES_PATH=$(ctx instance runtime_properties mongo_binaries_path)
-#MONGO_DATA_PATH=$(ctx instance runtime_properties mongo_data_path)
-
-
-#MONGO_PORT=$(ctx instance runtime_properties mongo_port)
-
-#ctx logger info "Sucessfully installed Solr"
-
-
-
-
